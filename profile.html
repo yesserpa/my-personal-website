@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Language Meta Tags -->
+  <meta http-equiv="Content-Language" content="en">
+  <meta name="language" content="English">
+  <meta property="og:locale" content="en_US">
+  
+  <title>Profile - Yesser Khemissi | Automation & Industrial IT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0056b3;
+      --secondary: #333333;
+      --accent: #28a745;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* Navigation Styles */
+    .navbar {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 25px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 15px 0;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary);
+    }
+    
+    /* Language Switcher Styles - ADDED */
+    .language-switcher {
+      position: relative;
+      margin-left: 20px;
+    }
+    
+    .lang-btn {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 8px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      color: #333;
+      transition: all 0.3s;
+    }
+    
+    .lang-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      min-width: 150px;
+      z-index: 1000;
+      margin-top: 5px;
+    }
+    
+    .lang-dropdown.show {
+      display: block;
+    }
+    
+    .lang-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      transition: background 0.3s;
+    }
+    
+    .lang-option:hover {
+      background: #f5f5f5;
+    }
+    
+    .lang-option:last-child {
+      border-bottom: none;
+    }
+    
+    .lang-option .flag {
+      font-size: 1.2em;
+    }
+    
+    /* Language Notification */
+    .language-notification {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: #0056b3;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.5s ease;
+      max-width: 300px;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    .menu-icon {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Content Styles */
+    .content {
+      flex: 1;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    .content h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--primary);
+      font-size: 2.2rem;
+    }
+    
+    /* Profile Header */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 50px;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .profile-image {
+      flex-shrink: 0;
+    }
+    
+    .profile-img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--primary);
+    }
+    
+    .profile-text {
+      flex: 1;
+    }
+    
+    .profile-text h2 {
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .profile-text .title {
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .profile-text p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+    
+    .profile-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .highlight {
+      background-color: #e9f7fe;
+      color: var(--primary);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    /* Skills Section */
+    .skills-section {
+      margin-bottom: 50px;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .section-title h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 3px;
+      background-color: var(--accent);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
+    .skill-category {
+      background-color: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+    
+    .skill-category:hover {
+      transform: translateY(-5px);
+    }
+    
+    .skill-category h3 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+    }
+    
+    .skill-category h3 i {
+      margin-right: 10px;
+      font-size: 1.5rem;
+    }
+    
+    .skill-items {
+      list-style: none;
+    }
+    
+    .skill-items li {
+      margin-bottom: 12px;
+      padding-left: 10px;
+      border-left: 3px solid var(--accent);
+    }
+    
+    .skill-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--secondary);
+    }
+    
+    .skill-details {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    /* Experience Section */
+    .experience-section {
+      margin-bottom: 50px;
+    }
+    
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 30px;
+      width: 2px;
+      background-color: #e0e0e0;
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+      padding-left: 70px;
+    }
+    
+    .timeline-icon {
+      position: absolute;
+      left: 20px;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.8rem;
+    }
+    
+    .timeline-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+    
+    .timeline-content h3 {
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    
+    .timeline-date {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    
+    /* Call to Action */
+    .cta-section {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, var(--primary), #003d82);
+      color: white;
+      border-radius: 8px;
+      margin-top: 50px;
+    }
+    
+    .cta-section h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+    
+    .cta-section p {
+      max-width: 600px;
+      margin: 0 auto 25px;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #218838;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid white;
+      margin-left: 10px;
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+    
+    /* Footer Styles */
+    .site-footer {
+      background-color: var(--secondary);
+      color: white;
+      padding: 30px 20px 20px;
+      margin-top: auto;
+    }
+    
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .social-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .social-links li {
+      margin-left: 20px;
+    }
+    
+    .social-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .nav-links li {
+        margin: 10px 0;
+      }
+      
+      .language-switcher {
+        position: absolute;
+        top: 20px;
+        right: 60px;
+      }
+      
+      .lang-dropdown {
+        right: 0;
+      }
+      
+      .language-notification {
+        top: 80px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+      }
+      
+      .menu-icon {
+        display: block;
+      }
+      
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .profile-highlights {
+        justify-content: center;
+      }
+      
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .timeline::before {
+        left: 20px;
+      }
+      
+      .timeline-item {
+        padding-left: 50px;
+      }
+      
+      .timeline-icon {
+        left: 10px;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .social-links {
+        margin-top: 15px;
+        justify-content: center;
+      }
+      
+      .social-links li {
+        margin: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">Yesser Khemissi</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="profile.html" class="active">Profile</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="my degree and certificate.html">Degrees & Certificates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+    <!-- LANGUAGE SWITCHER - ADDED HERE -->
+    <div class="language-switcher">
+      <button class="lang-btn" id="langBtn">
+        <i class="fas fa-globe"></i> 
+        <span id="currentLang">EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option" data-lang="en">
+          <span class="flag">🇺🇸</span> English
+        </div>
+        <div class="lang-option" data-lang="fr">
+          <span class="flag">🇫🇷</span> Français
+        </div>
+        <div class="lang-option" data-lang="ar">
+          <span class="flag">🇹🇳</span> العربية
+        </div>
+      </div>
+    </div>
+    
+    <div class="menu-icon" id="menuIcon">&#9776;</div>
+  </nav>
+
+  <!-- Main Content -->
+  <section class="content">
+    <h1>Professional Profile</h1>
+    
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-image">
+        <div class="profile-img">
+          <i class="fas fa-user" style="font-size: 100px; color: #0056b3; line-height: 200px;"></i>
+        </div>
+      </div>
+      <div class="profile-text">
+        <h2>Yesser Khemissi</h2>
+        <div class="title">Technicien Supérieur en Génie Electrique | Certified ISO 9001, 45001 & 50001</div>
+        <p>Je suis Yesser Khemissi, un Technicien Supérieur spécialisé en Automatisme et Informatique Industrielle, avec une expertise complémentaire en Électricité du Bâtiment. Mon parcours est guidé par une fascination pour l'optimisation des processus industriels et la résolution de défis techniques complexes.</p>
+        <p>Fort d'une expérience concrète en supervision de chantier et en gestion de projets électriques, je maîtrise l'ensemble du cycle de vie d'une installation, de la conception à la mise en service. Mon approche allie rigueur technique et sens aigu des responsabilités, avec un engagement constant pour la qualité et la sécurité.</p>
+        <div class="profile-highlights">
+          <div class="highlight">Energy Efficiency</div>
+          <div class="highlight">AutoCAD Electrical</div>
+          <div class="highlight">Caneco BT</div>
+          <div class="highlight">Industrial Automation</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Skills Section -->
+    <div class="skills-section">
+      <div class="section-title">
+        <h2>Technical Skills & Expertise</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3><i class="fas fa-cogs"></i> Automation & Industrial IT</h3>
+          <ul class="skill-items">
+            <li>
+              <div class="skill-name">Siemens TIA Portal</div>
+              <div class="skill-details">PLC programming, HMI design, industrial networks</div>
+            </li>
+            <li>
+              <div class="skill-name">Schneider Electric</div>
+              <div class="skill-details">Control Expert, SoMove, Vijeo Designer</div>
+            </li>
+            <li>
+              <div class="skill-name">Industrial Networks</div>
+              <div class="skill-details">PROFINET, PROFIBUS, Ethernet/IP</div>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="skill-category">
+          <h3><i class="fas fa-bolt"></i> Electrical Engineering</h3>
+          <ul class="skill-items">
+            <li>
+              <div class="skill-name">AutoCAD Electrical + Dialux</div>
+              <div class="skill-details">Schematic design, panel layout</div>
+            </li>
+            <li>
+              <div class="skill-name">Caneco BT</div>
+              <div class="skill-details">Calculation of short-circuit currents, cable sizing</div>
+            </li>
+            <li>
+              <div class="skill-name">Electrical Installation</div>
+              <div class="skill-details">Industrial & building electrical systems</div>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="skill-category">
+          <h3><i class="fas fa-chart-line"></i> Standards & Management</h3>
+          <ul class="skill-items">
+            <li>
+              <div class="skill-name">ISO 9001</div>
+              <div class="skill-details">Quality Management Systems</div>
+            </li>
+            <li>
+              <div class="skill-name">ISO 45001</div>
+              <div class="skill-details">Occupational Health & Safety Management</div>
+            </li>
+            <li>
+              <div class="skill-name">ISO 50001</div>
+              <div class="skill-details">Energy Management Systems</div>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="skill-category">
+          <h3><i class="fas fa-code"></i> Programming & Software</h3>
+          <ul class="skill-items">
+            <li>
+              <div class="skill-name">Python</div>
+              <div class="skill-details">Scripting for automation, data analysis</div>
+            </li>
+            <li>
+              <div class="skill-name">Raspberry Pi</div>
+              <div class="skill-details">Integration & prototyping</div>
+            </li>
+            <li>
+              <div class="skill-name">PLC Programming</div>
+              <div class="skill-details">Ladder Logic, Function Block Diagram, GRAFCET</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Experience Section -->
+    <div class="experience-section">
+      <div class="section-title">
+        <h2>Professional Experience</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>Technicien Supérieur en Génie Electrique et Responsable de gestion de projet</h3>
+            <p>Oversaw the implementation of electrical systems across construction projects, ensuring meticulous adherence to ISO 9001 quality management and ISO 45001 occupational safety standards. Directed cross-functional teams and managed vendor relationships to maintain project timelines while implementing comprehensive progress monitoring protocols.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-industry"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>Industrial Maintenance Intern</h3>
+            <p>Assisted with preventive and corrective maintenance of production equipment. Analyzed and reported machine malfunctions to supervisors. Applied safety procedures in industrial environments.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>Final Year Project - Fire Detection System</h3>
+            <p>Developed a fire detection and prevention system using drones and machine learning. Programmed Python scripts and integrated Raspberry Pi components. Presented technical documentation and results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="cta-section">
+      <h2>Interested in Working Together?</h2>
+      <p>I'm available for freelance projects, full-time positions, or technical consultations in industrial automation and electrical engineering.</p>
+      <a href="contact.html" class="btn">Contact Me</a>
+      <a href="resume.html" class="btn btn-outline">View Resume</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <p>&copy; 2025 Yesser Khemissi. All rights reserved.</p>
+      <ul class="social-links">
+        <li><a href="https://linkedin.com/in/khemissi-yesser-9a0a3225b" target="_blank">LinkedIn</a></li>
+        <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Google Translate Container -->
+  <div id="google_translate_element" style="display:none;"></div>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuIcon').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+    
+    // Language Detection and Switching
+    document.addEventListener('DOMContentLoaded', function() {
+      const langBtn = document.getElementById('langBtn');
+      const langDropdown = document.getElementById('langDropdown');
+      const currentLang = document.getElementById('currentLang');
+      
+      // 1. DETECT BROWSER LANGUAGE
+      function detectBrowserLanguage() {
+        const browserLang = navigator.language || navigator.userLanguage;
+        const langCode = browserLang.split('-')[0]; // Get 'en', 'fr', 'ar'
+        
+        if (langCode === 'fr') {
+          return 'fr';
+        } else if (langCode === 'ar') {
+          return 'ar';
+        } else {
+          return 'en';
+        }
+      }
+      
+      // 2. AUTO-DETECT ON PAGE LOAD
+      const detectedLang = detectBrowserLanguage();
+      
+      // Show language notification if not English
+      if (detectedLang !== 'en') {
+        setTimeout(() => {
+          showLanguageNotification(detectedLang);
+        }, 1000);
+      }
+      
+      // 3. TOGGLE DROPDOWN
+      langBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+      });
+      
+      // 4. LANGUAGE SELECTION
+      document.querySelectorAll('.lang-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const selectedLang = this.getAttribute('data-lang');
+          currentLang.textContent = selectedLang.toUpperCase();
+          
+          // Apply translation
+          applyTranslation(selectedLang);
+          
+          // Close dropdown
+          langDropdown.classList.remove('show');
+          
+          // Save preference
+          localStorage.setItem('preferredLanguage', selectedLang);
+        });
+      });
+      
+      // 5. LOAD SAVED PREFERENCE
+      const savedLang = localStorage.getItem('preferredLanguage');
+      if (savedLang) {
+        currentLang.textContent = savedLang.toUpperCase();
+      }
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function() {
+        langDropdown.classList.remove('show');
+      });
+    });
+    
+    // Function to show language notification
+    function showLanguageNotification(lang) {
+      const notification = document.createElement('div');
+      notification.className = 'language-notification';
+      
+      const langName = lang === 'fr' ? 'Français' : 'العربية';
+      notification.innerHTML = `
+        <i class="fas fa-language"></i>
+        <div>
+          <strong>Website available in ${langName}</strong>
+          <div style="font-size: 0.9em; opacity: 0.9;">Click the language button to translate</div>
+        </div>
+        <button style="background: transparent; border: none; color: white; cursor: pointer; margin-left: 10px;" onclick="this.parentElement.remove()">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove after 10 seconds
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 10000);
+    }
+    
+    // Function to apply Google Translate
+    function applyTranslation(lang) {
+      // Load Google Translate if not loaded
+      if (!window.google || !google.translate) {
+        const script = document.createElement('script');
+        script.src = `https://translate.google.com/translate_a/element.js?cb=initGoogleTranslate&hl=${lang}`;
+        document.body.appendChild(script);
+      } else {
+        // Trigger translation
+        const translateDiv = document.getElementById('google_translate_element');
+        translateDiv.style.display = 'block';
+        
+        // Simulate click on language option
+        setTimeout(() => {
+          if (window.google && google.translate) {
+            const iframe = document.querySelector('.goog-te-menu-frame');
+            if (iframe && iframe.contentWindow) {
+              const langOption = iframe.contentWindow.document.querySelector(`[value="${lang}"]`);
+              if (langOption) langOption.click();
+            }
+          }
+        }, 500);
+      }
+    }
+    
+    // Google Translate initialization
+    function initGoogleTranslate() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,fr,ar',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+      
+      // Hide Google's default banner
+      const style = document.createElement('style');
+      style.innerHTML = `
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget-simple { border: none !important; background: transparent !important; }
+      `;
+      document.head.appendChild(style);
+    }
+  </script>
+</body>
+</html>
