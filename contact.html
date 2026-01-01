@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Yesser Khemissi | Automation & Industrial IT</title>
+  
+  <!-- LANGUAGE META TAGS - ADDED -->
+  <meta http-equiv="Content-Language" content="en">
+  <meta name="language" content="English">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0056b3;
+      --secondary: #333333;
+      --accent: #28a745;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* Navigation Styles */
+    .navbar {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 25px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 15px 0;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary);
+    }
+    
+    .menu-icon {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Language Switcher Styles - ADD THIS CSS */
+    .language-switcher {
+      position: relative;
+      margin-left: 20px;
+    }
+    
+    .lang-btn {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 8px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      color: #333;
+      transition: all 0.3s;
+    }
+    
+    .lang-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      min-width: 150px;
+      z-index: 1000;
+      margin-top: 5px;
+    }
+    
+    .lang-dropdown.show {
+      display: block;
+    }
+    
+    .lang-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      transition: background 0.3s;
+    }
+    
+    .lang-option:hover {
+      background: #f5f5f5;
+    }
+    
+    .lang-option:last-child {
+      border-bottom: none;
+    }
+    
+    .lang-option .flag {
+      font-size: 1.2em;
+    }
+    
+    /* Language Notification */
+    .language-notification {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: #0056b3;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.5s ease;
+      max-width: 300px;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    /* For mobile */
+    @media (max-width: 768px) {
+      .language-switcher {
+        position: absolute;
+        top: 20px;
+        right: 60px;
+      }
+      
+      .lang-dropdown {
+        right: 0;
+      }
+      
+      .language-notification {
+        top: 80px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+      }
+    }
+    /* END Language Switcher Styles */
+    
+    /* Content Styles */
+    .content {
+      flex: 1;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    .content h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+      font-size: 2.2rem;
+    }
+    
+    .content > p {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: var(--gray);
+      font-size: 1.1rem;
+    }
+    
+    /* Contact Page Layout */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    
+    /* Contact Form Styles */
+    .contact-form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #004494;
+    }
+    
+    /* Contact Info Styles */
+    .contact-info {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .contact-info h2 {
+      margin-bottom: 25px;
+      color: var(--primary);
+      font-size: 1.6rem;
+    }
+    
+    .contact-details {
+      list-style: none;
+    }
+    
+    .contact-details li {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+    
+    .contact-icon {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-right: 15px;
+      min-width: 30px;
+    }
+    
+    .contact-text h3 {
+      margin-bottom: 5px;
+      color: var(--secondary);
+    }
+    
+    .contact-text p, .contact-text a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .contact-text a:hover {
+      color: var(--primary);
+    }
+    
+    /* Social Links */
+    .social-contact {
+      margin-top: 30px;
+    }
+    
+    .social-contact h3 {
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+    
+    .social-links-contact {
+      display: flex;
+      list-style: none;
+    }
+    
+    .social-links-contact li {
+      margin-right: 15px;
+    }
+    
+    .social-links-contact a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    
+    .social-links-contact a:hover {
+      background-color: #004494;
+    }
+    
+    /* Success Message Styles */
+    .success-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #c3e6cb;
+      margin-top: 20px;
+      display: none;
+    }
+    
+    /* Map Styles - RESTORED */
+    .map-section {
+      margin-top: 50px;
+    }
+    
+    .map-section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+    
+    .map-container {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    /* Quick Response Note */
+    .quick-response {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      background: #e9f7fe;
+      border-radius: 8px;
+    }
+    
+    .quick-response h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    /* Footer Styles */
+    .site-footer {
+      background-color: var(--secondary);
+      color: white;
+      padding: 30px 20px 20px;
+      margin-top: auto;
+    }
+    
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .social-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .social-links li {
+      margin-left: 20px;
+    }
+    
+    .social-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .nav-links li {
+        margin: 10px 0;
+      }
+      
+      .menu-icon {
+        display: block;
+      }
+      
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .social-links {
+        margin-top: 15px;
+        justify-content: center;
+      }
+      
+      .social-links li {
+        margin: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">Yesser Khemissi</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="my degree and certificate.html">Degrees & Certificates</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    
+    <!-- LANGUAGE SWITCHER - ADDED -->
+    <div class="language-switcher">
+      <button class="lang-btn" id="langBtn">
+        <i class="fas fa-globe"></i> 
+        <span id="currentLang">EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option" data-lang="en">
+          <span class="flag">🇺🇸</span> English
+        </div>
+        <div class="lang-option" data-lang="fr">
+          <span class="flag">🇫🇷</span> Français
+        </div>
+        <div class="lang-option" data-lang="ar">
+          <span class="flag">🇹🇳</span> العربية
+        </div>
+      </div>
+    </div>
+    
+    <div class="menu-icon" id="menuIcon">&#9776;</div>
+  </nav>
+
+  <!-- Main Content -->
+  <section class="content">
+    <h1>Get In Touch</h1>
+    <p>I'm available for freelance projects, full-time positions, or technical consultations. Let's discuss how we can work together!</p>
+    
+    <div class="contact-container">
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h2>Send Me a Message</h2>
+        <!-- YOUR WORKING FORMSPREE FORM -->
+        <form action="https://formspree.io/f/mzdzzagj" method="POST" id="contactForm">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" class="form-control" placeholder="What is this regarding?" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" class="form-control" placeholder="Tell me about your project or inquiry..." required></textarea>
+          </div>
+          <button type="submit" class="btn">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+          
+          <!-- Success message shown by Formspree redirect -->
+          <div id="successMessage" class="success-message">
+            <i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully.
+          </div>
+        </form>
+        
+        <p style="margin-top: 20px; font-size: 0.9rem; color: #666; text-align: center;">
+          <i class="fas fa-envelope"></i> Messages are sent directly to: yasserhmisi@gmail.com
+        </p>
+      </div>
+      
+      <!-- Contact Information -->
+      <div class="contact-info">
+        <h2>Contact Information</h2>
+        <ul class="contact-details">
+          <li>
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Location</h3>
+              <p>Tunis, Al Zohour, Tunisia</p>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Phone</h3>
+              <p>+216 53 453 693</p>
+              <small>(Available on WhatsApp)</small>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Email</h3>
+              <a href="mailto:yasserhmisi@gmail.com">yasserhmisi@gmail.com</a>
+              <p><small>Response within 24 hours</small></p>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Professional Profile</h3>
+              <p>Technician in Automation & Industrial IT</p>
+              <p>Certified in ISO 9001, 45001 & 50001</p>
+            </div>
+          </li>
+        </ul>
+        
+        <div class="social-contact">
+          <h3>Connect With Me</h3>
+          <ul class="social-links-contact">
+            <li>
+              <a href="https://linkedin.com/in/khemissi-yesser-9a0a3225b" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" target="_blank" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" target="_blank" title="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Quick Response Note -->
+    <div class="quick-response">
+      <h3><i class="fas fa-clock"></i> Quick Response Guaranteed</h3>
+      <p>I typically respond to all inquiries within <strong>24 hours</strong>. For urgent matters, please call or WhatsApp.</p>
+    </div>
+    
+    <!-- Map Section - RESTORED -->
+    <div class="map-section">
+      <h2><i class="fas fa-map-marked-alt"></i> My Location</h2>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127833.73823374138!2d10.060366549999999!3d36.8002068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd337f5e7ef543%3A0xd671924e714a0275!2sTunis%2C Tunisia!5e0!3m2!1sen!2sus!4v1698852645475!5m2!1sen!2sus"
+          width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <p style="text-align: center; margin-top: 15px; color: var(--gray);">
+        <i class="fas fa-info-circle"></i> Based in Tunis, Tunisia | Available for projects nationwide
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <p>&copy; 2025 Yesser Khemissi. All rights reserved.</p>
+      <ul class="social-links">
+        <li><a href="https://linkedin.com/in/khemissi-yesser-9a0a3225b" target="_blank">LinkedIn</a></li>
+        <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+        <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuIcon').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+    
+    // Check if form was submitted successfully (Formspree redirects with ?success)
+    if (window.location.search.includes('success')) {
+      document.getElementById('successMessage').style.display = 'block';
+    }
+    
+    // Language Switcher JavaScript
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    const currentLang = document.getElementById('currentLang');
+    
+    if (langBtn) {
+      // Toggle dropdown
+      langBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+      });
+      
+      // Language selection
+      document.querySelectorAll('.lang-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const selectedLang = this.getAttribute('data-lang');
+          currentLang.textContent = selectedLang.toUpperCase();
+          
+          // Apply Google Translate
+          applyTranslation(selectedLang);
+          
+          // Close dropdown
+          langDropdown.classList.remove('show');
+          
+          // Save preference
+          localStorage.setItem('preferredLanguage', selectedLang);
+        });
+      });
+      
+      // Load saved preference
+      const savedLang = localStorage.getItem('preferredLanguage');
+      if (savedLang) {
+        currentLang.textContent = savedLang.toUpperCase();
+      }
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function() {
+        langDropdown.classList.remove('show');
+      });
+    }
+    
+    // Function to apply Google Translate
+    function applyTranslation(lang) {
+      // Load Google Translate if not loaded
+      if (!window.google || !google.translate) {
+        const script = document.createElement('script');
+        script.src = `https://translate.google.com/translate_a/element.js?cb=initGoogleTranslate&hl=${lang}`;
+        document.body.appendChild(script);
+      } else {
+        initGoogleTranslate();
+      }
+    }
+    
+    // Google Translate initialization
+    function initGoogleTranslate() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,fr,ar',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+      
+      // Hide Google's default banner
+      const style = document.createElement('style');
+      style.innerHTML = `
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget-simple { border: none !important; background: transparent !important; }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    // Detect browser language and show notification
+    function detectBrowserLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      return browserLang.split('-')[0]; // Get 'en', 'fr', 'ar'
+    }
+    
+    // Show language notification if needed
+    setTimeout(() => {
+      const detectedLang = detectBrowserLanguage();
+      const savedLang = localStorage.getItem('preferredLanguage');
+      
+      if ((detectedLang === 'fr' || detectedLang === 'ar') && !savedLang) {
+        const langName = detectedLang === 'fr' ? 'Français' : 'العربية';
+        const notification = document.createElement('div');
+        notification.className = 'language-notification';
+        notification.innerHTML = `
+          <i class="fas fa-language"></i>
+          <div>
+            <strong>Website available in ${langName}</strong>
+            <div style="font-size: 0.9em; opacity: 0.9;">Click the language button to translate</div>
+          </div>
+          <button style="background: transparent; border: none; color: white; cursor: pointer; margin-left: 10px;" onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          if (notification.parentElement) notification.remove();
+        }, 10000);
+      }
+    }, 2000);
+  </script>
+  
+  <!-- Google Translate Container -->
+  <div id="google_translate_element" style="display:none;"></div>
+  
+</body>
+</html>

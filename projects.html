@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Language Meta Tags -->
+  <meta http-equiv="Content-Language" content="en">
+  <meta name="language" content="English">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
+  <meta property="og:locale:alternate" content="ar_AR">
+  
+  <title>Projects - Yesser Khemissi | Automation & Industrial IT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0056b3;
+      --secondary: #333333;
+      --accent: #28a745;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* Navigation Styles */
+    .navbar {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 25px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 15px 0;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary);
+    }
+    
+    .menu-icon {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Language Switcher Styles */
+    .language-switcher {
+      position: relative;
+      margin-left: 20px;
+    }
+    
+    .lang-btn {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 8px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      color: #333;
+      transition: all 0.3s;
+    }
+    
+    .lang-btn:hover {
+      border-color: #0056b3;
+      color: #0056b3;
+    }
+    
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      min-width: 150px;
+      z-index: 1000;
+      margin-top: 5px;
+    }
+    
+    .lang-dropdown.show {
+      display: block;
+    }
+    
+    .lang-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      transition: background 0.3s;
+    }
+    
+    .lang-option:hover {
+      background: #f5f5f5;
+    }
+    
+    .lang-option:last-child {
+      border-bottom: none;
+    }
+    
+    .lang-option .flag {
+      font-size: 1.2em;
+    }
+    
+    /* Language Notification */
+    .language-notification {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: #0056b3;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.5s ease;
+      max-width: 300px;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Content Styles */
+    .content {
+      flex: 1;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    .content h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--primary);
+      font-size: 2.2rem;
+    }
+    
+    /* Projects Section */
+    .projects-intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 50px;
+      color: var(--gray);
+      font-size: 1.1rem;
+    }
+    
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .project-card {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .project-image {
+      height: 200px;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+    
+    .project-content {
+      padding: 25px;
+    }
+    
+    .project-content h3 {
+      margin-bottom: 15px;
+      color: var(--primary);
+      font-size: 1.4rem;
+    }
+    
+    .project-meta {
+      display: flex;
+      margin-bottom: 15px;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .project-date {
+      margin-right: 15px;
+    }
+    
+    .project-category {
+      background-color: #e9ecef;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+    
+    .project-description {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .project-technologies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .tech-tag {
+      background-color: #e9f7fe;
+      color: var(--primary);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .project-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    
+    .project-link:hover {
+      color: var(--accent);
+    }
+    
+    .project-link i {
+      margin-right: 5px;
+    }
+    
+    /* Call to Action */
+    .cta-section {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, var(--primary), #003d82);
+      color: white;
+      border-radius: 8px;
+      margin-top: 50px;
+    }
+    
+    .cta-section h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+    
+    .cta-section p {
+      max-width: 600px;
+      margin: 0 auto 25px;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #218838;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid white;
+      margin-left: 10px;
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+    
+    /* Footer Styles */
+    .site-footer {
+      background-color: var(--secondary);
+      color: white;
+      padding: 30px 20px 20px;
+      margin-top: auto;
+    }
+    
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .social-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .social-links li {
+      margin-left: 20px;
+    }
+    
+    .social-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .nav-links li {
+        margin: 10px 0;
+      }
+      
+      .menu-icon {
+        display: block;
+      }
+      
+      .language-switcher {
+        position: absolute;
+        top: 20px;
+        right: 60px;
+      }
+      
+      .lang-dropdown {
+        right: 0;
+      }
+      
+      .language-notification {
+        top: 80px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+      }
+      
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .project-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .social-links {
+        margin-top: 15px;
+        justify-content: center;
+      }
+      
+      .social-links li {
+        margin: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">Yesser Khemissi</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="my degree and certificate.html">Degrees & Certificates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+      <button class="lang-btn" id="langBtn">
+        <i class="fas fa-globe"></i> 
+        <span id="currentLang">EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option" data-lang="en">
+          <span class="flag">🇺🇸</span> English
+        </div>
+        <div class="lang-option" data-lang="fr">
+          <span class="flag">🇫🇷</span> Français
+        </div>
+        <div class="lang-option" data-lang="ar">
+          <span class="flag">🇹🇳</span> العربية
+        </div>
+      </div>
+    </div>
+    
+    <div class="menu-icon" id="menuIcon">&#9776;</div>
+  </nav>
+
+  <!-- Google Translate Container (Hidden) -->
+  <div id="google_translate_element" style="display:none;"></div>
+
+  <!-- Main Content -->
+  <section class="content">
+    <h1>My Projects</h1>
+    <p class="projects-intro">A showcase of my work in industrial automation, electrical engineering, and technology solutions. Each project demonstrates my technical skills and problem-solving abilities.</p>
+    
+    <div class="project-grid">
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-image" style="background-color: #dc3545;">
+          <i class="fas fa-fire"></i>
+        </div>
+        <div class="project-content">
+          <h3>AI Fire Detection System</h3>
+          <div class="project-meta">
+            <span class="project-date"><i class="far fa-calendar"></i> 2022</span>
+            <span class="project-category">Final Year Project</span>
+          </div>
+          <p class="project-description">Developed a prototype drone-based fire detection system using Python and Raspberry Pi for early warning. The system uses computer vision algorithms to detect smoke and fire patterns in real-time.</p>
+          <div class="project-technologies">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Raspberry Pi</span>
+            <span class="tech-tag">Computer Vision</span>
+            <span class="tech-tag">IoT</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Details</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="project-image" style="background-color: #28a745;">
+          <i class="fas fa-leaf"></i>
+        </div>
+        <div class="project-content">
+          <h3>Industrial Energy Efficiency Audit</h3>
+          <div class="project-meta">
+            <span class="project-date"><i class="far fa-calendar"></i> 2024</span>
+            <span class="project-category">Professional Certification</span>
+          </div>
+          <p class="project-description">Analyzed and proposed optimization solutions for an industrial electrical system to achieve 15% theoretical energy savings. Applied ISO 50001 principles to identify energy waste and recommend improvements.</p>
+          <div class="project-technologies">
+            <span class="tech-tag">Energy Audit</span>
+            <span class="tech-tag">ISO 50001</span>
+            <span class="tech-tag">Caneco BT</span>
+            <span class="tech-tag">Optimization</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Details</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project 3 -->
+      <div class="project-card">
+        <div class="project-image" style="background-color: #0056b3;">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <div class="project-content">
+          <h3>Industrial Electrical Supervision</h3>
+          <div class="project-meta">
+            <span class="project-date"><i class="far fa-calendar"></i> 2023-2024</span>
+            <span class="project-category">Professional Experience</span>
+          </div>
+          <p class="project-description">Supervised the complete electrical installation for a construction project, ensuring full compliance with ISO 9001 and 45001 standards. Coordinated teams and managed project documentation.</p>
+          <div class="project-technologies">
+            <span class="tech-tag">Electrical Installation</span>
+            <span class="tech-tag">ISO 9001</span>
+            <span class="tech-tag">ISO 45001</span>
+            <span class="tech-tag">Project Management</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Details</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project 4 -->
+      <div class="project-card">
+        <div class="project-image" style="background-color: #6f42c1;">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+        <div class="project-content">
+          <h3>Professional Portfolio Website</h3>
+          <div class="project-meta">
+            <span class="project-date"><i class="far fa-calendar"></i> 2024</span>
+            <span class="project-category">Web Development</span>
+          </div>
+          <p class="project-description">Designed and developed a responsive portfolio website using HTML/CSS to digitally present my profile as an Automation and Industrial IT Technician. Features a modern design and optimal user experience.</p>
+          <div class="project-technologies">
+            <span class="tech-tag">HTML/CSS</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Responsive Design</span>
+            <span class="tech-tag">UI/UX</span>
+          </div>
+          <div class="project-links">
+            <a href="index.html" class="project-link"><i class="fas fa-external-link-alt"></i> Visit Website</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project 5 -->
+      <div class="project-card">
+        <div class="project-image" style="background-color: #fd7e14;">
+          <i class="fas fa-industry"></i>
+        </div>
+        <div class="project-content">
+          <h3>Test Bench Automation</h3>
+          <div class="project-meta">
+            <span class="project-date"><i class="far fa-calendar"></i> 2022</span>
+            <span class="project-category">Internship Project</span>
+          </div>
+          <p class="project-description">Assisted in troubleshooting and improving an automated test bench using Schneider Electric PLCs. Documented procedures and modified ladder logic programs for enhanced diagnostics.</p>
+          <div class="project-technologies">
+            <span class="tech-tag">PLC Programming</span>
+            <span class="tech-tag">Schneider Electric</span>
+            <span class="tech-tag">Diagnostics</span>
+            <span class="tech-tag">Maintenance</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Details</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project 6 -->
+      <div class="project-card">
+        <div class="project-image" style="background-color: #20c997;">
+          <i class="fas fa-tools"></i>
+        </div>
+        <div class="project-content">
+          <h3>Electrical Panel Design</h3>
+          <div class="project-meta">
+            <span class="project-date"><i class="far fa-calendar"></i> 2023</span>
+            <span class="project-category">Design Project</span>
+          </div>
+          <p class="project-description">Created detailed electrical panel designs using AutoCAD Electrical and performed calculations with Caneco BT. Ensured compliance with safety standards and optimized component layout.</p>
+          <div class="project-technologies">
+            <span class="tech-tag">AutoCAD Electrical</span>
+            <span class="tech-tag">Caneco BT</span>
+            <span class="tech-tag">Panel Design</span>
+            <span class="tech-tag">Safety Standards</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="cta-section">
+      <h2>Interested in My Work?</h2>
+      <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+      <a href="contact.html" class="btn">Get In Touch</a>
+      <a href="resume.html" class="btn btn-outline">View My Resume</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <p>&copy; 2025 Yesser Khemissi. All rights reserved.</p>
+      <ul class="social-links">
+        <li><a href="https://linkedin.com/in/khemissi-yesser-9a0a3225b" target="_blank">LinkedIn</a></li>
+        <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+        <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuIcon').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+    
+    // Language Detection and Switching
+    function detectBrowserLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      const langCode = browserLang.split('-')[0];
+      
+      if (langCode === 'fr') return 'fr';
+      else if (langCode === 'ar') return 'ar';
+      else return 'en';
+    }
+    
+    function showLanguageNotification(lang) {
+      const existing = document.querySelector('.language-notification');
+      if (existing) existing.remove();
+      
+      const notification = document.createElement('div');
+      notification.className = 'language-notification';
+      const langName = lang === 'fr' ? 'Français' : 'العربية';
+      notification.innerHTML = `
+        <i class="fas fa-language"></i>
+        <div>
+          <strong>Website available in ${langName}</strong>
+          <div style="font-size: 0.9em; opacity: 0.9;">Click the language button above to translate</div>
+        </div>
+        <button class="close-notification" style="background: transparent; border: none; color: white; cursor: pointer; margin-left: 10px;">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      
+      document.body.appendChild(notification);
+      notification.querySelector('.close-notification').addEventListener('click', function() {
+        notification.remove();
+      });
+      
+      setTimeout(() => {
+        if (notification.parentElement) notification.remove();
+      }, 10000);
+    }
+    
+    function applyTranslation(lang) {
+      if (!window.google || !google.translate) {
+        const script = document.createElement('script');
+        script.src = `https://translate.google.com/translate_a/element.js?cb=initGoogleTranslate&hl=${lang}`;
+        document.body.appendChild(script);
+      } else {
+        document.getElementById('google_translate_element').style.display = 'block';
+        setTimeout(() => {
+          if (window.google && google.translate) {
+            const iframe = document.querySelector('.goog-te-menu-frame');
+            if (iframe && iframe.contentWindow) {
+              const langOption = iframe.contentWindow.document.querySelector(`[value="${lang}"]`);
+              if (langOption) langOption.click();
+            }
+          }
+        }, 500);
+      }
+    }
+    
+    function initGoogleTranslate() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,fr,ar',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+      
+      const style = document.createElement('style');
+      style.innerHTML = `
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget-simple { border: none !important; background: transparent !important; }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    // Initialize Language Switcher
+    document.addEventListener('DOMContentLoaded', function() {
+      const langBtn = document.getElementById('langBtn');
+      const langDropdown = document.getElementById('langDropdown');
+      const currentLang = document.getElementById('currentLang');
+      
+      if (langBtn) {
+        // Toggle dropdown
+        langBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          langDropdown.classList.toggle('show');
+        });
+        
+        // Language selection
+        document.querySelectorAll('.lang-option').forEach(option => {
+          option.addEventListener('click', function() {
+            const selectedLang = this.getAttribute('data-lang');
+            if (currentLang) currentLang.textContent = selectedLang.toUpperCase();
+            applyTranslation(selectedLang);
+            langDropdown.classList.remove('show');
+            localStorage.setItem('preferredLanguage', selectedLang);
+          });
+        });
+        
+        // Load saved preference
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang && currentLang) {
+          currentLang.textContent = savedLang.toUpperCase();
+        }
+        
+        // Auto-detect on page load
+        const detectedLang = detectBrowserLanguage();
+        if (detectedLang !== 'en' && !savedLang) {
+          setTimeout(() => showLanguageNotification(detectedLang), 2000);
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+          langDropdown.classList.remove('show');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
