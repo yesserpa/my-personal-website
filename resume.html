@@ -254,6 +254,30 @@
       font-size: 1.2rem;
     }
     
+    /* Language Versions */
+    .language-versions {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .lang-tag {
+      display: inline-block;
+      background: #f0f8ff;
+      color: #0056b3;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      margin: 0 5px 10px 5px;
+      border: 1px solid #d0e3ff;
+      transition: all 0.3s;
+    }
+    
+    .lang-tag:hover {
+      background: #e0f0ff;
+      transform: translateY(-2px);
+    }
+    
     /* Quick Info */
     .quick-info {
       display: flex;
@@ -456,9 +480,27 @@
       </div>
       <h2>Download My Resume</h2>
       <p>Get a complete overview of my professional background, skills, and qualifications in PDF format.</p>
-      <a href="CV\langue.pdf" class="btn">
-        <i class="fas fa-download"></i> Download Resume
+      
+      <!-- FIXED DOWNLOAD LINK -->
+      <a href="Yesser_Khemissi_Resume.pdf" class="btn" download="Yesser_Khemissi_Resume.pdf">
+        <i class="fas fa-download"></i> Download Resume (PDF)
       </a>
+      
+      <!-- Optional: Language Versions Section -->
+      <div class="language-versions">
+        <p style="color: var(--gray); font-size: 0.95em; margin-bottom: 15px;">Also available in:</p>
+        <div>
+          <a href="Yesser_Khemissi_Resume_English.pdf" class="lang-tag" download>
+            <i class="fas fa-file-alt"></i> English Version
+          </a>
+          <a href="Yesser_Khemissi_Resume_French.pdf" class="lang-tag" download>
+            <i class="fas fa-file-alt"></i> Version Française
+          </a>
+          <a href="Yesser_Khemissi_Resume_Arabic.pdf" class="lang-tag" download>
+            <i class="fas fa-file-alt"></i> النسخة العربية
+          </a>
+        </div>
+      </div>
     </div>
     
     <div class="quick-info">
@@ -466,7 +508,7 @@
         <i class="fas fa-user-tie"></i>
         <div class="info-text">
           <h3>Professional Title</h3>
-          <p> Technicien Supérieur en Génie Electrique</p>
+          <p>Technicien Supérieur en Génie Electrique</p>
         </div>
       </div>
       
@@ -642,7 +684,14 @@
       `;
       document.head.appendChild(style);
     }
+    
+    // Add download tracking (optional)
+    document.querySelectorAll('a[download]').forEach(link => {
+      link.addEventListener('click', function() {
+        console.log('Resume download clicked: ' + this.getAttribute('href'));
+        // You can add analytics tracking here
+      });
+    });
   </script>
 </body>
-
 </html>
